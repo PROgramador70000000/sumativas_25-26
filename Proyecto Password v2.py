@@ -84,3 +84,17 @@ for veces in range(3):
 print(f"Ya has introducido {veces + 1} contraseñas, así que has acabado el programa. ")
 print(f"Has introducido {correctas} contraseñas correctas. ")
 print(f"Has introducido {incorrectas} contraseñas incorrectas. ")
+
+#TESTEOS:
+#CONTRASEÑA     -     SALIDA
+
+#1. a1b2C@#     -     El formato de la contraseña 1 es incorrecto. ¡Vuelve a intentarlo!
+#2. 2iM4*z/7    -     El formato de la contraseña 1 es correcto. ¡Felicidades! 
+#3. IM7d/6l     -     El formato de la contraseña 2 es incorrecto. ¡Vuelve a intentarlo!
+#4. 3O7nl4//_,  -     La longitud de tu contraseña es de 10, así que no cumple con los requisitos. 
+#5. 23uoV*#9    -     El formato de la contraseña 2 es correcto. ¡Felicidades!
+#6. 99io*/55    -     El formato de la contraseña 3 es incorrecto. ¡Vuelve a intentarlo!
+#7. z95Lp&1@    -     El formato de la contraseña 1 es correcto. ¡Felicidades! 
+#8. Lm&91/M3    -     El formato de la contraseña 2 es incorrecto. ¡Vuelve a intentarlo! 
+#9. 8j_kL       -     La longitud de tu contraseña es de 5, así que no cumple con los requisitos. 
+#10. _K7o2p1_   -     El formato de la contraseña 1 es correcto. ¡Felicidades!
