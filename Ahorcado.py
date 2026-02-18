@@ -14,17 +14,21 @@ def comprobar_letra(respuesta):
             if palabra[i] == respuesta:
                 lista_partida[i] = respuesta
         print('¡Muy bien! Has acertado una letra.')
+        lista_aciertos.append(respuesta)
     else:
         lista_ahorcado.append(ahorcado[len(lista_ahorcado)])
         print('¡Oh no! Esa letra no está en la palabra secreta.')
+        lista_errores.append(respuesta)
         print(lista_ahorcado)
 
 while otra in 'sS':
-    lista_palabrasecreta = ['perro', 'gato', 'casa', 'arbol', 'sol', 'luna', 'estrella', 'mariposa', 'avion', 'tren']
+    lista_palabrasecreta = ['rahez', 'petricor', 'hoz', 'exacerbar', 'contumaz', 'whiskey', 'hipopotomonstrosesquipedaliofobia', 'inmarcesible', 'orondo', 'ñañara', 'zurriburri', 'ful']
     lista_partida = []
     ahorcado = ['A', 'H', 'O', 'R', 'C', 'A', 'D', 'O']
     lista_ahorcado = []
     palabra = random.choice(lista_palabrasecreta)
+    lista_aciertos = []
+    lista_errores = []
 
     for i in range(len(palabra)):
         lista_partida.append('_')
@@ -56,6 +60,7 @@ while otra in 'sS':
         print(f'¡Enhorabuena! Has adivinado la palabra secreta: {palabra}.')
     else:
         print(f'¡Lo siento! Has perdido. La palabra secreta era: {palabra}.')
+    print(f'Has acertado {len(lista_aciertos)} letras y has cometido {len(lista_errores)} errores.')
 
     lista_palabrasecreta.remove(palabra)
 
