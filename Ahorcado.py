@@ -11,40 +11,6 @@ tildes = 'áéíóúÁÉÍÓÚ'
 
 lista_palabrasecreta = ['pátata']
 apuestas = 'n'
-dinero = 200
-
-apuestas = input('¿Quieres jugar con apuestas? (s/n): ')
-if not apuestas in 'nNsS':
-    print('Introduce una respuesta válida (s/n).')
-    while not apuestas in 'nNsS':
-        apuestas = input('¿Quieres jugar con apuestas? (s/n): ')
-        if not apuestas in 'nNsS':
-            print('Introduce una respuesta válida (s/n).')
-
-if apuestas in 'nN':
-        print('¡Perfecto! Empezamos el juego sin apuestas. ')
-elif apuestas in 'sS':
-    print('Vale, vamos a jugar con apuestas. En este modo, ganarás o perderás dinero dependiendo de si ganas o pierdes. ')
-    print('Vamos a jugar al ahorcado. Dependiendo de la dificultad de la palabra, ganarás o perderás más dinero. ')
-    print('Empiezas con 200 euros. ¡Buena suerte!')
-    
-#Definimos las funciones que necesitaremos más adelante. 
-def imprimir_partida():
-    #Esta función muestra el estado de la partida; los guiones y letras acertadas en la palabra secreta. 
-    #Ahora hacemos lo mismo tres veces; asignamos variable vacía, y le concatenamos todos los elementos de la lista correspondiente. 
-    salida = ''
-    for i in range(len(lista_partida)):
-        salida = salida + lista_partida[i] + ' '
-    aciertos = ''
-    for i in range(len(lista_aciertos)):
-        aciertos = aciertos + lista_aciertos[i] + ' '
-    fallos = ''
-    for i in range(len(lista_errores)):
-        fallos = fallos + lista_errores[i] + ' '
-    #Por último, mostramos el estado de la partida, y las letras acertadas y erróneas.
-    print(salida)
-    print(f'Letras acertadas: {aciertos}')
-    print(f'Letras erróneas: {fallos}')
 
 def comprobar_letra(respuesta):
     #Esta función comprueba si la letra está en la palabra, y si es así actualiza la partida. 
@@ -67,6 +33,181 @@ def comprobar_letra(respuesta):
         print('¡Oh no! Esa letra no está en la palabra secreta.')
         lista_errores.append(respuesta)
         print(lista_ahorcado)
+
+#Definimos las funciones que necesitaremos más adelante. 
+def imprimir_partida():
+    #Esta función muestra el estado de la partida; los guiones y letras acertadas en la palabra secreta. 
+    #Ahora hacemos lo mismo tres veces; asignamos variable vacía, y le concatenamos todos los elementos de la lista correspondiente. 
+    salida = ''
+    for i in range(len(lista_partida)):
+        salida = salida + lista_partida[i] + ' '
+    aciertos = ''
+    for i in range(len(lista_aciertos)):
+        aciertos = aciertos + lista_aciertos[i] + ' '
+    fallos = ''
+    for i in range(len(lista_errores)):
+        fallos = fallos + lista_errores[i] + ' '
+    #Por último, mostramos el estado de la partida, y las letras acertadas y erróneas.
+    print(salida)
+    print(f'Letras acertadas: {aciertos}')
+    print(f'Letras erróneas: {fallos}')
+
+apuestas = input('¿Quieres jugar con apuestas? No podrás cambiar esto más tarde. (s/n): ')
+if not apuestas in 'nNsS':
+    print('Introduce una respuesta válida (s/n).')
+    while not apuestas in 'nNsS':
+        apuestas = input('¿Quieres jugar con apuestas? No podrás cambiar esto más tarde. (s/n): ')
+        if not apuestas in 'nNsS':
+            print('Introduce una respuesta válida (s/n).')
+
+if apuestas in 'nN':
+        print('¡Perfecto! Empezamos el juego sin apuestas. ')
+elif apuestas in 'sS':
+    #El modo con apuestas es básicamente ina copia del original con solo unos cuantos cambios. 
+    #Me pregunto si es posible hacer el modo de apuestas sin repetirlo todo, pero no se me ocurre. 
+    print('Vale, vamos a jugar con apuestas. En este modo, ganarás o perderás dinero dependiendo de si ganas o pierdes. ')
+    print('Vamos a jugar al ahorcado. Dependiendo de la dificultad de la palabra, ganarás o perderás más dinero. ')
+    print('Empiezas con 200 euros. ¡Buena suerte!')
+    dinero = 200
+    palabras_faciles = ['pato', 'gato', 'casa', 'perro', 'árbol', 'libro', 'coche', 'mesa', 'silla', 'ventana']
+    palabras_medio = ['pelota', 'camisa', 'zapato', 'ciudad', 'playa', 'montaña', 'río', 'mariposa', 'avión', 'estrella']
+    palabras_dificiles = ['orondo', 'hoz', 'exacerbar', 'zozobro', 'inmarcesible', 'petricor', 'hipopotomonstrosesquipedaliofobia', 'zorzal', 'yuxtaposición', 'jirafa', 'píxel', 'pneumonoultramicroscopicsilicovolcanoconiosis']
+
+    while otra in 'sS' and apuestas in 'sS' and len(palabras_dificiles) > 0 and len(palabras_faciles) > 0 and len(palabras_medio) > 0 and dinero > 0:
+        print(f'Tienes {dinero} euros. ')
+        apuesta = input('¿Cuánto quieres apostar? Máximo 500 euros: ')
+        if int(apuesta) > dinero:
+            print(f'No puedes apostar más de lo que tienes. Tienes {dinero} euros.')
+            while int(apuesta) > dinero:
+                apuesta = input('¿Cuánto quieres apostar? Máximo 500 euros: ')
+                if int(apuesta) > dinero:
+                    print(f'No puedes apostar más de lo que tienes. Tienes {dinero} euros.')
+        if not apuesta.isdigit() or int(apuesta) < 0 or int(apuesta) > 500:
+            print('Introduce una cantidad válida (0-500 euros).')
+            while not apuesta.isdigit() or int(apuesta) < 0 or int(apuesta) > 500:
+                apuesta = input('¿Cuánto quieres apostar? Máximo 500 euros: ')
+                if not apuesta.isdigit() or int(apuesta) < 0 or int(apuesta) > 500:
+                    print('Introduce una cantidad válida (0-500 euros).')
+
+        if int(apuesta) <= 20:
+            print('Has elegido apostar poco. La palabra secreta será fácil. ')
+            lista_palabrasecreta = palabras_faciles
+        elif int(apuesta) <= 100:
+            print('Has elegido apostar una cantidad media. La palabra secreta será de dificultad media. ')
+            lista_palabrasecreta = palabras_medio
+        else:
+            print('Has elegido apostar mucho. La palabra secreta será difícil. ')
+            lista_palabrasecreta = palabras_dificiles
+
+        lista_partida = []
+        lista_ahorcado = []
+        palabra = random.choice(lista_palabrasecreta)
+        lista_aciertos = []
+        lista_errores = []
+        tilde = False
+
+        respuesta = ''
+        respuesta_definitiva = ''
+
+        #Si la palabra secreta tiene tildes, se crea otra variable que guarda una versión sin tildes. 
+        for i in range(len(palabra)):
+            if palabra[i] in tildes:
+                palabradef = palabra.replace(palabra[i], normal[tildes.index(palabra[i])])
+                tilde = True
+        if not tilde:
+            palabradef = palabra   
+
+        #Se crea la lista de partida, con tantos guiones como letras tenga la palabra secreta.
+        for i in range(len(palabradef)):
+            lista_partida.append('_')
+
+        while respuesta_definitiva != palabradef and respuesta_definitiva != palabra and len(lista_ahorcado) < 8:
+            imprimir_partida()
+            respuesta = input('Introduce una letra: ')
+            if respuesta == 'palabra':
+                #Primero, comprobamos si el jugador quiere averiguar la palabra secreta. 
+                #Con una variable (introducir_palabra), evitamos errores y bucles innecesarios. 
+                respuesta = input('Introduce la palabra secreta: ')
+                if respuesta == palabradef or respuesta == palabra:
+                    respuesta_definitiva = palabradef
+                    introducir_palabra = True
+                else:
+                    print('¡Oh no! Esa no es la palabra secreta. Has perdido automáticamente.')
+                    lista_ahorcado = ahorcado
+                    introducir_palabra = True
+            else:
+                introducir_palabra = False
+
+            if respuesta in lista_aciertos:
+                #Se comprueba si la letra ya había sido acertada. 
+                print('¡Ya has acertado esa letra! Intenta con otra diferente.')
+                while respuesta in lista_aciertos:
+                    respuesta = input('Introduce una letra: ')
+                    if respuesta in lista_aciertos:
+                        print('¡Ya has acertado esa letra! Intenta con otra diferente.')
+
+            if respuesta in lista_errores:
+                #Se comprueba si la letra ya había sido errónea. 
+                print('¡Ya has fallado esa letra! Intenta con otra diferente.')
+                while respuesta in lista_errores:
+                    respuesta = input('Introduce una letra: ')
+                    if respuesta in lista_errores:
+                        print('¡Ya has fallado esa letra! Intenta con otra diferente.')
+
+            if len(respuesta) == 1 and introducir_palabra == False:
+                #En caso de que la letra tenga la longitud correcta, se comprueba si está en la palabra secreta.
+                comprobar_letra(respuesta)
+            elif introducir_palabra == False:
+                #En caso contrario, se pide una nueva letra hasta que introduzca una letra o la palabra secreta.
+                print('¡Error! Solo puedes introducir una letra a la vez.')
+                while len(respuesta) != 1 and respuesta != 'palabra':
+                    respuesta = input('Introduce una letra: ')
+                    if len(respuesta) != 1 and respuesta != 'palabra':
+                        print('¡Error! Solo puedes introducir una letra a la vez.')
+                if len(respuesta) == 1:
+                    comprobar_letra(respuesta)
+                elif respuesta == 'palabra':
+                    respuesta = input('Introduce la palabra secreta: ')
+                    if respuesta == palabradef or respuesta == palabra:
+                        respuesta_definitiva = palabradef
+                        introducir_palabra = True
+                    else:
+                        print('¡Oh no! Esa no es la palabra secreta. Has perdido automáticamente.')
+                        lista_ahorcado = ahorcado
+                    introducir_palabra = True
+        
+            #Por último, se actualiza la respuesta definitiva, para comprobar si el jugador ha ganado o continua jugando.
+            if introducir_palabra == False:
+                respuesta_definitiva = ''
+                for i in range(len(lista_partida)):
+                    respuesta_definitiva = respuesta_definitiva + lista_partida[i]
+
+        #Una vez hemos acabado con la paryida, se muestra la partida una última vez...
+        if introducir_palabra == False:
+            imprimir_partida()
+
+        #Y se muestra un mensaje dependiendo de si el jugador ha ganaod o perdido. 
+        if respuesta_definitiva == palabradef or respuesta_definitiva == palabra:
+            print(f'¡Enhorabuena! Has adivinado la palabra secreta: {palabra}.')
+            print(f'Has ganado {apuesta} euros. Ahora tienes {dinero + int(apuesta)} euros.')
+            dinero = dinero + int(apuesta)
+        else:
+            print(f'¡Lo siento! Has perdido. La palabra secreta era: {palabra}.')
+            print(f'Has perdido {apuesta} euros. Ahora tienes {dinero - int(apuesta)} euros.')
+            dinero = dinero - int(apuesta)
+        if introducir_palabra == False:
+            print(f'Has acertado {len(lista_aciertos)} letras y has cometido {len(lista_errores)} errores.')
+
+        #Se elimina la palabra utilizada de la lista, para que no vuelva a aparecer. 
+        lista_palabrasecreta.remove(palabra)
+
+        otra = input('¿Quieres jugar otra vez? (s/n): ')
+        if not otra in 'sSnN':
+            print('Introduce una respuesta válida (s/n).')
+            while not otra in 'sSnN':
+                otra = input('¿Quieres jugar otra vez? (s/n): ')
+                if not otra in 'sSnN':
+                    print('Introduce una respuesta válida (s/n).')
 
 while otra in 'sS' and len(lista_palabrasecreta) > 0 and apuestas in 'nN':
     #Entramos en el Bucle. Solo saldremos si no queremos jugar más o si no quedan más palabras secretas.
@@ -210,5 +351,13 @@ if apuestas in 'nN':
         print('Fin del programa. ¡Gracias por jugar! ')
     else:
         print('Ya no quedan más palabras secretas. ¡Gracias por jugar! ')
+
+if apuestas in 'sS':
+    if otra in 'nN':
+        print(f'Fin del programa. ¡Gracias por jugar! Tienes {dinero} euros. ')
+    elif dinero <= 0:
+        print('¡Oh no! Te has quedado sin dinero. Fin del programa. ¡Gracias por jugar!')
+    else:
+        print('Ya no quedan más palabras secretas. ¡Gracias por jugar!')
 
 print(f'Tiempo total de juego: {time.time() - inicio:.2f} segundos.')
