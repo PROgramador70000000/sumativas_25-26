@@ -1,6 +1,7 @@
 #Importamos las librerías necesarias. 
 import random
 import time
+import os
 
 #Definimos las variables que no se reinician en cada partida.
 otra = 's'
@@ -9,7 +10,61 @@ ahorcado = ['A', 'H', 'O', 'R', 'C', 'A', 'D', 'O']
 normal = 'aeiouAEIOU'
 tildes = 'áéíóúÁÉÍÓÚ'
 
-lista_palabrasecreta = ['pátata']
+lista_palabrasecreta = palabras = [
+    "casa", "perro", "gato", "árbol", "cielo", "camino", "fuego", "agua", "tierra",
+    "viento", "luz", "sombra", "noche", "día", "sol", "luna", "estrella", "flor",
+    "hoja", "mar", "río", "montaña", "valle", "ciudad", "pueblo", "bosque", "campo",
+    "nube", "tormenta", "lluvia", "trueno", "relámpago", "brisa", "arena", "playa",
+    "costa", "isla", "océano", "barco", "puerto", "puente", "carretera", "coche",
+    "tren", "avión", "bicicleta", "camión", "persona", "niño", "niña", "hombre",
+    "mujer", "amigo", "amiga", "familia", "madre", "padre", "hermano", "hermana",
+    "abuelo", "abuela", "tío", "tía", "primo", "prima", "profesor", "profesora",
+    "alumno", "alumna", "escuela", "libro", "cuaderno", "lápiz", "bolígrafo",
+    "mesa", "silla", "puerta", "ventana", "pared", "techo", "suelo", "computadora",
+    "pantalla", "ratón", "teclado", "internet", "programa", "código", "juego",
+    "música", "película", "arte", "pintura", "escultura", "canción", "idioma",
+    "palabra", "frase", "texto", "historia", "cultura", "ciencia", "matemáticas",
+    "física", "química", "biología", "universo", "planeta", "galaxia", "energía",
+    "átomo", "molécula", "célula", "animal", "planta", "insecto", "pez", "ave",
+    "mamífero", "reptil", "anfibio", "comida", "bebida", "pan", "leche", "carne",
+    "fruta", "verdura", "arroz", "pasta", "sal", "azúcar", "aceite", "huevo",
+    "queso", "tomate", "patata", "zanahoria", "manzana", "naranja", "plátano",
+    "uva", "melón", "sandía", "fresa", "cereza", "limón", "pera", "durazno",
+    "café", "té", "chocolate", "galleta", "pastel", "helado", "sopa", "ensalada",
+    "pollo", "pescado", "cerdo", "vaca", "oveja", "caballo", "burro", "conejo",
+    "tigre", "león", "elefante", "jirafa", "mono", "zorro", "lobo", "oso",
+    "serpiente", "águila", "halcón", "paloma", "gallina", "pato", "ganso",
+    "mariposa", "abeja", "hormiga", "araña", "caracol", "cangrejo", "delfín",
+    "ballena", "tiburón", "pulpo", "medusa", "estrella", "roca", "piedra",
+    "metal", "madera", "plástico", "vidrio", "papel", "tela", "cuero", "oro",
+    "plata", "cobre", "hierro", "acero", "diamante", "rubí", "esmeralda",
+    "montaña", "colina", "acantilado", "desierto", "selva", "pradera",
+    "volcán", "glaciar", "laguna", "pantano", "cascada", "río", "arroyo",
+    "laguna", "bahía", "golfo", "océano", "mar", "playa", "duna", "cueva",
+    "gruta", "caverna", "templo", "iglesia", "catedral", "mezquita", "sinagoga",
+    "castillo", "palacio", "torre", "muralla", "fortaleza", "puente", "túnel",
+    "edificio", "rascacielos", "hotel", "hospital", "mercado", "tienda",
+    "supermercado", "restaurante", "cafetería", "parque", "plaza", "jardín",
+    "fuente", "estatua", "museo", "teatro", "cine", "estadio", "gimnasio",
+    "piscina", "biblioteca", "oficina", "fábrica", "almacén", "aeropuerto",
+    "estación", "terminal", "puerto", "garaje", "cocina", "baño", "dormitorio",
+    "salón", "comedor", "pasillo", "balcón", "terraza", "jardín", "patio",
+    "sótano", "ático", "ventilador", "calefacción", "aire", "humo", "fuego",
+    "ceniza", "carbón", "gas", "electricidad", "motor", "máquina", "herramienta",
+    "martillo", "destornillador", "llave", "sierra", "taladro", "tornillo",
+    "tuerca", "clavo", "cuerda", "cadena", "candado", "puerta", "ventana",
+    "espejo", "reloj", "teléfono", "radio", "televisión", "cámara", "foto",
+    "vídeo", "película", "documento", "archivo", "carpeta", "correo", "mensaje",
+    "señal", "símbolo", "mapa", "planeta", "continente", "país", "región",
+    "provincia", "ciudad", "pueblo", "barrio", "calle", "avenida", "carretera",
+    "camino", "sendero", "ruta", "viaje", "turismo", "aventura", "exploración",
+    "trabajo", "empleo", "oficio", "profesión", "arte", "ciencia", "deporte",
+    "juego", "competición", "carrera", "salud", "enfermedad", "medicina",
+    "doctor", "enfermero", "paciente", "cura", "remedio", "vacuna", "virus",
+    "bacteria", "energía", "fuerza", "velocidad", "tiempo", "espacio", "materia",
+    "forma", "color", "tamaño", "peso", "altura", "anchura", "profundidad"
+]
+
 apuestas = 'n'
 
 def comprobar_letra(respuesta):
@@ -51,6 +106,36 @@ def imprimir_partida():
     print(salida)
     print(f'Letras acertadas: {aciertos}')
     print(f'Letras erróneas: {fallos}')
+
+def guardar_partida():
+    with open('ultima_partida.txt', 'w') as archivo:
+        archivo.write(f'{time.ctime()};')
+        archivo.write(f'{palabra};')
+        archivo.write(f'{len(lista_aciertos)};')
+        archivo.write(f'{len(lista_errores)};')
+        if respuesta_definitiva == palabradef or respuesta_definitiva == palabra:
+            archivo.write('Victoria\n')
+        else:
+            archivo.write('Derrota\n')
+
+if os.path.exists('ultima_partida.txt'):
+    if os.path.getsize('ultima_partida.txt') > 0:
+        mostrar_partida = input('Hay una partida guardada. ¿Quieres ver el resumen? (s/n): ')
+        if not mostrar_partida in 'sSnN':
+            print('Introduce una respuesta válida (s/n).')
+            while not mostrar_partida in 'sSnN':
+                mostrar_partida = input('Hay una partida guardada. ¿Quieres ver el resumen? (s/n): ')
+                if not mostrar_partida in 'sSnN':
+                    print('Introduce una respuesta válida (s/n).')
+        if mostrar_partida in 'sS':
+            with open('ultima_partida.txt', 'r') as archivo:
+                partida_guardada = archivo.read().split(';')
+                print('Resumen de tu última partida:')
+                print(f'Fecha y hora: {partida_guardada[0]}')
+                print(f'Palabra secreta: {partida_guardada[1]}')
+                print(f'Número de aciertos: {partida_guardada[2]}')
+                print(f'Número de errores: {partida_guardada[3]}')
+                print(f'Resultado: {partida_guardada[4]}')
 
 apuestas = input('¿Quieres jugar con apuestas? No podrás cambiar esto más tarde. (s/n): ')
 if not apuestas in 'nNsS':
@@ -360,4 +445,21 @@ if apuestas in 'sS':
     else:
         print('Ya no quedan más palabras secretas. ¡Gracias por jugar!')
 
-print(f'Tiempo total de juego: {time.time() - inicio:.2f} segundos.')
+minutos = int((time.time() - inicio) // 60)
+segundos = int((time.time() - inicio) % 60)
+
+print(f'Tiempo total de juego: {minutos} minutos y {segundos} segundos.')
+
+guardar = input('¿Quieres guardar un resumen de tu partida? (s/n): ')
+if not guardar in 'sSnN':
+    while not guardar in 'sSnN':
+        print('Introduce una respuesta válida (s/n).')
+        guardar = input('¿Quieres guardar un resumen de tu partida? (s/n): ')
+        if not guardar in 'sSnN':
+            print('Introduce una respuesta válida (s/n).')
+
+if guardar in 'sS':
+    guardar_partida()
+    print('¡Partida guardada!')
+else:
+    print('¡Gracias por jugar!')
